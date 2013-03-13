@@ -14,12 +14,12 @@ function sineWave(t, i){
 
 Your function will be called with the following arguments:
 
-*Time (float)*
-*Sample index* (integer)
-*Input sample* (float), this will be zero if there is no input. See "advanced" use below.
-// Midi commands: this is not implemented.
-// Fundamental Frequency: this is not implemented either, just an idea for cases such as effects node chains
-// Data Object : also not implemented.
+* Time (float)
+* Sample index (integer)
+* Input sample (float), this will be zero if there is no input. See "advanced" use below.
+* // Midi commands: this is not implemented.
+* // Fundamental Frequency: this is not implemented either, just an idea for cases such as effects node chains
+* // Data Object : also not implemented.
 
 As a helper, this module will write _SAMPLERATE on the window. You cannot change sampleRates in the web audio api as of yet. I tried writing a mock downsampler into webaudio, but it did not sound good, nor bad, enough. 
 
@@ -101,8 +101,6 @@ On mobile safari webkit (iOS), you can only initiate web audio API sounds from w
 iOS 5.x does not support the webkit that supports the web audio api.
 
 #Methods
-
-Whatever is on the 
 
 ## channel.play()
 Start playing the sound. This connects the node to the master contexts destination for you.
