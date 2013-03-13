@@ -5,7 +5,7 @@ module.exports = function (context, fn) {
       context = new webkitAudioContext() ;
     }
 
-    var self = context.createJavaScriptNode(2048, 1, 1);
+    var self = context.createScriptProcessor(2048, 1, 1);
 
 	  self.fn = fn
 	

@@ -52,7 +52,7 @@ channel.play()
 // later, channel.stop()
 
 ```
-For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other webaudio nodes/functions, or other HTML5 Web Audio API nodes. This module just returns a wrapped up javascript node, which you can connect to other nodes, or, to the final audioContext.destination:
+For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other webaudio functions, or other HTML5 Web Audio API nodes. This module (webaudio) returns a wrapped up ScriptProcessorNode, which you can connect to other nodes, or, to the final audioContext.destination:
 
 ```js
 var webaudio = require('webaudio')
@@ -86,9 +86,11 @@ setTimeout(function(){
 ```
 
 ## Mobile Safari
-*Note, on mobile safari webkit (iOS), you can only initiate web audio API sounds from within a user event context (at least the fist time...?). Ergo, channel.play(), or channel.connect(context.destination) must be called from inside an event callback.*
+On mobile safari webkit (iOS), you can only initiate web audio API sounds from within a user event context (at least the fist time...?). Ergo, channel.play(), or channel.connect(context.destination) must be called from inside an event callback.
 
 #Methods
+
+Whatever is on the 
 
 ## channel.play()
 Start playing the sound. This connects the node to the master contexts destination for you.
@@ -98,10 +100,10 @@ Disconnects the node from the master
 
 ## channel.createSample(duration)
 This helper method will run your function for as long as **duration**, in *samples*.
+
 ie, 48000 =~ one second, depending on your sound card
-It returns an [audioBuffer node](http://www.w3.org/TR/webaudio/#AudioBuffer),
-which are what you use for precisely timed samples and loops. 
-So you could for instance write a script that writes 1 second samples for every note value, through your synth function, and the buttons to trigger those samples.
+
+This returns an [audioBuffer node](http://www.w3.org/TR/webaudio/#AudioBuffer), which are what you use for precision timed samples and loops. So you could for instance write a script that creates 1 second samples for every note value, through your synth function.
 
 
 
