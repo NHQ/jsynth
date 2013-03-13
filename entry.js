@@ -22,18 +22,17 @@ var channel1 = webaudio(audio, sine);
 
 var channel2 = webaudio(audio, gain);
 
-play.addEventListener('click', function(){
-	channel1.connect(channel2)
-	channel2.play() // .connect(audio.destination);
-
-/*
-	var buffer = channel1.createSourceBuffer(48000);
-	var source = audio.createSample();
+/* un-comment me for 1 second of sinewave
+	var buffer = channel1.createSample(_SAMPLERATE);
+	var source = audio.createBuffer();
 	source.connect(audio.destination)
   source.buffer = buffer
   source.noteOn(0);
 */
- // channel1.record()
+
+play.addEventListener('click', function(){
+	channel1.connect(channel2)
+	channel2.play() // .connect(audio.destination);
 
 });
 
