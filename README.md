@@ -1,6 +1,6 @@
 # webaudio
 
-Generate audio streams with functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on iOS 6 mobile safari (see note below).
+Generate audio streams with functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
 
 Your function will be called with the following arguments:
 
@@ -87,6 +87,8 @@ setTimeout(function(){
 
 ## Mobile Safari
 On mobile safari webkit (iOS), you can only initiate web audio API sounds from within a user event context (at least the fist time...?). Ergo, channel.play(), or channel.connect(context.destination) must be called from inside an event callback.
+
+iOS 5.x does not support the webkit that supports the web audio api.
 
 #Methods
 
