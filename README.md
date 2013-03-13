@@ -52,7 +52,7 @@ channel.play()
 // later, channel.stop()
 
 ```
-For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other webaudio functions, or other HTML5 Web Audio API nodes. This module just returns a wrapped up javascript node, which you can connect to other nodes, or, to the final audioContext.destination:
+For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other webaudio nodes/functions, or other HTML5 Web Audio API nodes. This module just returns a wrapped up javascript node, which you can connect to other nodes, or, to the final audioContext.destination:
 
 ```js
 var webaudio = require('webaudio')
