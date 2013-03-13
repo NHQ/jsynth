@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>OPA!</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
