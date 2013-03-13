@@ -1,10 +1,3 @@
-var Stream = require('stream');
-var inherits = require('inherits');
-var enslave = require('work-slave');
-var fs = require('fs');
-var worker = fs.readFileSync(__dirname + '/worker.js');
-var recorder = require('./record.js')
-
 module.exports = function (context, fn) {
 	
     if (typeof context === 'function') {
