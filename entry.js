@@ -1,6 +1,6 @@
 // this is an entry file for use with *browserify* v.2 http://github.com/substack/browserify
 // browserify is the breeder's choice for front-end web development the Node.js way
-// this repo can also be used OPA, a web dev heloper tool http://github.com/NHQ/opa
+// this repo can also be used with OPA, a web dev heloper tool http://github.com/NHQ/opa
 
 var webaudio = require('./webaudio')
   , audio = new webkitAudioContext()

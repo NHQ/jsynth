@@ -1,6 +1,6 @@
 # webaudio
 
-Generate audio streams with functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
+Generate audio streams (DSP) with functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
 
 Your function will be called with the following arguments:
 
