@@ -19,7 +19,7 @@ module.exports = function (context, fn) {
 
 	  self.onaudioprocess = function(e){
 	    var output = e.outputBuffer.getChannelData(0)
-			,   input = e.inputBuffer.getChannelData(0)
+			,   input = e.inputBuffer.getChannelData(0);
 			self.tick(output, input);
 	  };
 	
