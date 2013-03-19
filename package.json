@@ -1,6 +1,6 @@
 {
   "name": "webaudio",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "write audio streams with javascript functions in the browser",
   "main": "webaudio.js",
   "scripts": {
