@@ -1,6 +1,6 @@
-# webaudio
+# jsynth
 
-Generate audio streams (DSP) with javascript functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
+Generate audio with javascript functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
 
 ```js
 var  A0 = 440
@@ -21,7 +21,7 @@ Your function will be called with the following arguments:
 * // Fundamental Frequency: this is not implemented either, just an idea for cases such as effects node chains
 * // Data Object : also not implemented.
 
-As a helper, this module will write _SAMPLERATE on the window. You cannot change sampleRates in the web audio api as of yet. I tried writing a mock downsampler into webaudio, but it did not sound good, nor bad, enough. 
+As a helper, this module will write _SAMPLERATE on the window. You cannot change sampleRates in the web audio api as of yet. I tried writing a mock downsampler into jsynth, but it did not sound good, nor bad, enough. 
 
 You function should return a float between [-1, 1]. See examples below.
 
@@ -29,8 +29,8 @@ To play around with it, do
 
 ```bash
 npm install -g browserify opa
-git clone https://github.com/NHQ/webaudio
-cd webaudio
+git clone https://github.com/NHQ/jsynth
+cd jsynth
 opa
 ```
 
@@ -42,12 +42,12 @@ see also [opa](https://github.com/NHQ/opa)
 # usage
 
 ```bash
-npm install webaudio
+npm install jsynth
 ```
 
 Simple use:
 ```js
-var webaudio = require('webaudio')
+var jsynth = require('jsynth')
   , tau = Math.PI * 2
   , frequency = 555
 ;
@@ -56,16 +56,16 @@ function sine(time, i){
   return Math.sin(time * tau * frequency)
 }
 
-var channel = webaudio(sine);
+var channel = jsynth(sine);
 
 channel.play()
 // later, channel.stop()
 
 ```
-For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other webaudio functions, or other HTML5 Web Audio API nodes. This module (webaudio) returns a finished ScriptProcessorNode, which you can connect to other nodes, or, to the final audioContext.destination:
+For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other jsynth functions, or other HTML5 Web Audio API nodes. This module (jsynth) returns a finished ScriptProcessorNode, which you can connect to other nodes, or, to the final audioContext.destination:
 
 ```js
-var webaudio = require('webaudio')
+var jsynth = require('jsynth')
   , tau = Math.PI * 2
   , frequency = 555
   , context = new webkitAudioContext();
@@ -78,8 +78,8 @@ function gain(time, i, inputSample){
   return inputSample * 1 / 4 
 }
 
-var signal = webaudio(context, sine)
-var gain = webaudio(context, gain)
+var signal = jsynth(context, sine)
+var gain = jsynth(context, gain)
 
 signal.connect(gain);
 

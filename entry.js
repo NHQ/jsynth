@@ -7,7 +7,7 @@
 //
 
 
-var webaudio = require('./webaudio')
+var jsynth = require('./jsynth')
   , audio = new webkitAudioContext()
   , play = document.getElementById('play')
   , stop = document.getElementById('stop')
@@ -23,9 +23,9 @@ function gain(time, i, sample){
   return sample * .02
 };
 
-var channel1 = webaudio(audio, sine);
+var channel1 = jsynth(audio, sine);
 
-var channel2 = webaudio(audio, gain);
+var channel2 = jsynth(audio, gain);
 
 play.addEventListener('click', function(){
 	channel1.connect(channel2)

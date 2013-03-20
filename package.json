@@ -1,21 +1,21 @@
 {
-  "name": "webaudio",
+  "name": "jsynth",
   "version": "1.0.0",
-  "description": "write audio streams with javascript functions in the browser",
+  "description": "write audio with javascript functions in the browser",
   "main": "webaudio.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NHQ/webaudio.git"
+    "url": "https://github.com/NHQ/jsynth.git"
   },
   "keywords": [
     "web",
     "audio",
     "DSP"
   ],
-  "author": "johnny",
+  "author": "johnnyscript.us",
   "license": "MIT",
   "readmeFilename": "README.md"
 }
