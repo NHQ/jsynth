@@ -7,7 +7,7 @@
 //
 
 
-var jsynth = require('./jsynth')
+var jsynth = require('./')
   , audio = new webkitAudioContext()
   , play = document.getElementById('play')
   , stop = document.getElementById('stop')
