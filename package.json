@@ -2,7 +2,7 @@
   "name": "jsynth",
   "version": "2.0.0",
   "description": "write audio with javascript functions in the browser",
-  "main": "webaudio.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,43 +1,36 @@
 # jsynth
 
-Generate audio with javascript functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) functions. Works on webkits only, including iOS 6 mobile safari (see note below).
+Generate audio/DSP with javascript functions in the browser. Compatible with [baudio](https://github.com/substack/baudio) style functions. Works on webkits, including Chrome, and iOS 6 mobile safari (see note below). Maybe Firefox now, but untested.
 
+Pass your audio context, and your DSP function to the constructor.
+It will return a Web Audio Script Processing Node, which can be connected to any other Web Audio Node on the graph.
+
+Simple use, generate a tone:
 ```js
-var  A0 = 440
-,    tau = Math.PI * 2
+var master = new webkitAudioContext();
 
-function sineWave(t, i){
-	return Math.sin( t * tau * A0 )
+var jsynth = require('jsynth')
+  , tau = Math.PI * 2
+  , frequency = 555
+;
+
+var sineGenerator = function (time, index, input){
+  return Math.sin(time * tau * frequency)
 }
-...
+
+var synth = jsynth(master, sineGenerator); // returns a web audio node
+
+synth.connect(master.destination)
+
 ```
 
 Your function will be called with the following arguments:
 
-* Time (float)
+* Time, in seconds (float)
 * Sample index (integer)
-* Input sample (float), this will be zero if there is no input. See "advanced" use below.
-* // Midi commands: this is not implemented.
-* // Fundamental Frequency: this is not implemented either, just an idea for cases such as effects node chains
-* // Data Object : also not implemented.
-
-As a helper, this module will write _SAMPLERATE on the window. You cannot change sampleRates in the web audio api as of yet. I tried writing a mock downsampler into jsynth, but it did not sound good, nor bad, enough. 
+* Input sample (float), MONO, this will be zero if there is no input. Use this if you are connecting other web Audio Api Nodes to this one. In the near future this will be a an array, for multiple input channels.
 
 You function should return a float between [-1, 1]. See examples below.
-
-To play around with it, do
-
-```bash
-npm install -g browserify opa
-git clone https://github.com/NHQ/jsynth
-cd jsynth
-opa
-```
-
-Open your browser to http://localhost:11001
-Edit entry.js and refresh
-
-see also [opa](https://github.com/NHQ/opa)
 
 # usage
 
@@ -45,83 +38,20 @@ see also [opa](https://github.com/NHQ/opa)
 npm install jsynth
 ```
 
-Simple use:
-```js
-var jsynth = require('jsynth')
-  , tau = Math.PI * 2
-  , frequency = 555
-;
+# Mobile Safari
+On mobile safari webkit (iOS), you can only initiate web audio API sounds from within a user event context, such as a click.
 
-function sine(time, i){
-  return Math.sin(time * tau * frequency)
-}
+# Example
 
-var channel = jsynth(sine);
-
-channel.play()
-// later, channel.stop()
-
+to run the example, use [opa](https://github.com/nhq/opa)
 ```
-For more advanced use, pass an audioContext as the first argument. You then use the same audio context to connect and use other jsynth functions, or other HTML5 Web Audio API nodes. This module (jsynth) returns a finished ScriptProcessorNode, which you can connect to other nodes, or, to the final audioContext.destination:
-
-```js
-var jsynth = require('jsynth')
-  , tau = Math.PI * 2
-  , frequency = 555
-  , context = new webkitAudioContext();
-
-function sine(time, i){
-  return Math.sin(time * tau * frequency)
-}
-
-function gain(time, i, inputSample){
-  return inputSample * 1 / 4 
-}
-
-var signal = jsynth(context, sine)
-var gain = jsynth(context, gain)
-
-signal.connect(gain);
-
-path.connect(context.destination)
-
-/*
-setTimeout(function(){
-  path.disconnect(); 	// path.stop()
-  path.connect(recorder);
-  recorder.connect(repeater);
-  repeater.connect(audio.destination)
-}, 1000)
-*/
+npm install -g watchify opa
 ```
-
-## Mobile Safari
-On mobile safari webkit (iOS), you can only initiate web audio API sounds from within a user event context (at least the fist time...?). Ergo, channel.play(), or channel.connect(context.destination) must be called from inside an event callback.
-
-iOS 5.x does not support the webkit that supports the web audio api.
-
-#Methods
-
-## channel.play()
-Start playing the sound. This connects the node to the master contexts destination for you.
-
-## channel.stop()
-Disconnects the node from the master
-
-## channel.createSample(duration)
-This helper method will run your function for as long as **duration**, in *samples*.
-
-ie, 48000 =~ one second, depending on your sound card
-
-This returns an [audioBuffer node](http://www.w3.org/TR/webaudio/#AudioBuffer), which are what you use for precision timed samples and loops. So you could for instance write a script that creates 1 second samples for every note value, through your synth function.
-
-
-
-
-
-
-
-
-
-
-
+(watchify is browserify + file a file watcher) 
+Then:
+```
+git clone git@github.com:NHQ/jsynth.git
+cd jsynth
+opa -n -e example.js 
+```
+open your browser to http://localhost:11001
