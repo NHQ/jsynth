@@ -1,11 +1,13 @@
-module.exports = function (context, fn) {
+module.exports = function (context, fn, bufSize) {
     
     if (typeof context === 'function') {
 	fn = context;
 	context = new webkitAudioContext() ;
     }
 
-    var self = context.createScriptProcessor(2048, 1, 1);
+    if(!bufSize) bufSize = 4096;
+
+    var self = context.createScriptProcessor(bufSize, 1, 1);
 
     self.fn = fn
     
