@@ -1,3 +1,13 @@
+var work = require('webworkify')
+var xxx = require('jmao')
+var worker = work(require('./worker.js'))
+var output = null
+var input = null
+z = null
+worker.onmessage = function(evt){
+  output.set(xxx.construct(evt.data))
+}
+
 module.exports = function (context, fn, bufSize) {
 
     if (typeof context === 'function') {
@@ -5,7 +15,8 @@ module.exports = function (context, fn, bufSize) {
       context = new webkitAudioContext() ;
     }
 
-    if(!bufSize) bufSize = 4096;
+    if(!bufSize) bufSize = 4096 * 2 * 2;
+    worker.postMessage(xxx.deconstruct({type: 'config', sampleRate : context.sampleRate, size: bufSize, fn: fn}))
 
     var self = context.createScriptProcessor(bufSize, 1, 1);
 
@@ -20,9 +31,10 @@ module.exports = function (context, fn, bufSize) {
     self.recording = false;
 
     self.onaudioprocess = function(e){
-      var output = e.outputBuffer.getChannelData(0)
-      ,   input = e.inputBuffer.getChannelData(0);
-      self.tick(output, input);
+      output = e.outputBuffer.getChannelData(0)
+      input = e.inputBuffer.getChannelData(0);
+      worker.postMessage(xxx.deconstruct({type: 'data', input: input}))
+      //output.set(z)
     };
 
     self._input = []
@@ -40,11 +52,6 @@ module.exports = function (context, fn, bufSize) {
           self.i += 1;
 
           output[i] = self.fn(self.t, self.i, input);
-
-          if(self.i >= self.duration) {
-            self.stop()
-            break;
-          }
 
       }
 

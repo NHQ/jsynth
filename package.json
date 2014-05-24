@@ -1,7 +1,7 @@
 {
-  "name": "jsynth",
+  "name": "jsynth-ww",
   "version": "2.2.0",
-  "description": "write audio with javascript functions in the browser",
+  "description": "write audio with javascript functions in the browser, now with webworkers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,13 @@
   "keywords": [
     "web",
     "audio",
-    "DSP"
+    "DSP",
+    "webworkers"
   ],
+  "dependencies" : {
+    "jmao" : "",
+    "webworkify" : ""
+  },
   "author": "johnnyscript.us",
   "license": "MIT",
   "readmeFilename": "README.md"
