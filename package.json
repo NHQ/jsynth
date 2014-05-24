@@ -1,6 +1,6 @@
 {
   "name": "jsynth-ww",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "write audio with javascript functions in the browser, now with webworkers",
   "main": "index.js",
   "scripts": {
@@ -16,9 +16,9 @@
     "DSP",
     "webworkers"
   ],
-  "dependencies" : {
-    "jmao" : "",
-    "webworkify" : ""
+  "dependencies": {
+    "jmao": "",
+    "webworkify": ""
   },
   "author": "johnnyscript.us",
   "license": "MIT",
