@@ -39,6 +39,10 @@ module.exports = function (context, fn, bufSize) {
 
     self._input = []
     
+    self.update = function(fn){
+      worker.postMessage(xxx.deconstruct({type: 'function', fn: fn}))
+    }
+
     self.tick = function (output, input) { // a fill-a-buffer function
 
       output = output || self._buffer;

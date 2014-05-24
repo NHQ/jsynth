@@ -17,4 +17,12 @@ var synth = jsynth(master, sineGenerator, 4096);
 
 synth.connect(master.destination)
 
-console.log(master, synth)
+setTimeout(function(){
+  var Generator = function (){
+    var tau = Math.PI * 2
+    return function(time){
+      return Math.sin(time * tau * 440 * 2)
+    }
+  }
+  synth.update(Generator)
+}, 5000)

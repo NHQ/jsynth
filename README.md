@@ -1,6 +1,6 @@
 # jsynth-ww
 
-This is jsynth with webworkers, and it is somewhat different because your function needs to return your function, for proper context scoping.  See below.
+This is jsynth with webworkers, and it is somewhat different because your function needs to return your function, for proper context scoping.  Becuz this uses webworkers, there is also a method for changing your DSP function.
 
 Use this module to generate audio/DSP with javascript functions in the browser. 
 
@@ -30,6 +30,10 @@ var sineGenerator = function (time, index, input){
 var synth = jsynth(master, sineGenerator, 4096); // returns a web audio node
 
 synth.connect(master.destination)
+
+// later, change the function
+synth.update(newGeneratorFunction)
+
 
 ```
 
