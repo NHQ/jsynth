@@ -14,15 +14,17 @@ var master = new webkitAudioContext();
 
 var jsynth = require('jsynth-ww')
 ;
+
 /* 
-  the following actually returns the function that will be used for
-  audio process.  It is encapsulated in a function for scoped variable definitions.
+  the following returns the function that will be used for audio process.  
+  It is encapsulated in a function for scoped variable definitions.
   This is because the whole thing is going in a webworker scope.
 */
-var sineGenerator = function (time, index, input){
+
+var sineGenerator = function (){
   var tau = Math.PI * 2;
   var f = 444
-  return function(time){
+  return function(time, index, input){
     return Math.sin(time * tau * f)
   }
 }
@@ -43,7 +45,7 @@ Your function will be called with the following arguments:
 * Sample index (integer)
 * Input sample (float), MONO, this will be zero if there is no input. Use this if you are connecting other web Audio Api Nodes to this one.
 
-You function should return a float between [-1, 1]-ish, but don't be afraid to multiply amplitudes. See examples below.
+You function should return a float between [-1, 1]-ish, but don't be afraid to multiply amplitudes.
 
 # usage
 
