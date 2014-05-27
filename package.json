@@ -18,7 +18,9 @@
   ],
   "dependencies": {
     "jmao": "",
-    "webworkify": ""
+    "webworkify": "",
+    "post-json": "~0.3.0",
+    "detective": "~3.1.0"
   },
   "author": "johnnyscript.us",
   "license": "MIT",

@@ -3,26 +3,19 @@
 var master = new webkitAudioContext();
 
 var jsynth = require('./')
-;
+var srcr = require('../iframarfi/src.js')
 
-// this is where your math/magic goes
-var sineGenerator = function (){
-  var tau = Math.PI * 2
-  return function(time){
-    return Math.sin(time * tau * 440)
-  }
-}
-
-var synth = jsynth(master, sineGenerator, 4096);
-
-synth.connect(master.destination)
-
-setTimeout(function(){
-  var Generator = function (){
+var code = function(){
+  var amod = require('amod')  
+  var sineGenerator = function (){
     var tau = Math.PI * 2
     return function(time){
-      return Math.sin(time * tau * 440 * 2)
+      return Math.sin(time * tau * 440) 
     }
   }
-  synth.update(Generator)
-}, 5000)
+  return sineGenerator
+}
+
+var synth = jsynth(master, code, 4096);
+
+synth.connect(master.destination)

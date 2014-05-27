@@ -16,6 +16,19 @@ module.exports = function (context, fn, bufSize) {
     }
 
     if(!bufSize) bufSize = 4096 * 2 * 2;
+    
+    if(fn.name.length == 0){
+      var str = fn.toString();
+      str = str.split('(')
+      var f = str.shift()
+      f = f.trim()
+      f += ' anonymous'
+      str.unshift(f)
+      str = str.join('(')
+      fn = str
+    }
+    else fn = fn.toString()
+
     worker.postMessage(xxx.deconstruct({type: 'config', sampleRate : context.sampleRate, size: bufSize, fn: fn}))
 
     var self = context.createScriptProcessor(bufSize, 1, 1);
