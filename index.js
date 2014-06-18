@@ -17,18 +17,6 @@ module.exports = function (context, fn, bufSize) {
 
     if(!bufSize) bufSize = 4096 * 2 * 2;
     
-    if(fn.name.length == 0){
-      var str = fn.toString();
-      str = str.split('(')
-      var f = str.shift()
-      f = f.trim()
-      f += ' anonymous'
-      str.unshift(f)
-      str = str.join('(')
-      fn = str
-    }
-    else fn = fn.toString()
-
     worker.postMessage(xxx.deconstruct({type: 'config', sampleRate : context.sampleRate, size: bufSize, fn: fn}))
 
     var self = context.createScriptProcessor(bufSize, 1, 1);
@@ -47,13 +35,13 @@ module.exports = function (context, fn, bufSize) {
       output = e.outputBuffer.getChannelData(0)
       input = e.inputBuffer.getChannelData(0);
       worker.postMessage(xxx.deconstruct({type: 'data', input: input}))
-      //output.set(z)
+//output.set(z)
     };
 
     self._input = []
     
     self.update = function(fn){
-      worker.postMessage(xxx.deconstruct({type: 'function', fn: fn}))
+      worker.postMessage(xxx.deconstruct({type: 'config', fn: fn}))
     }
 
     self.tick = function (output, input) { // a fill-a-buffer function

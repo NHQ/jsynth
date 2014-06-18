@@ -1,20 +1,18 @@
 module.exports = function(){
   var xxx = require('jmao')
   var detect = require('detective')
-  var dereq = require('derequire')
   var moduleCache = {}
-  var t = 0, i = 0, rate = 44100 
+  t = 0, i = 0, rate = 44100 
   var _require = require
   require = function(module){
-    console.log(module)
-    if(module = moduleCache[module]) return _require(module.bundle)
+    if(moduleCache[module]) return moduleCache[module].exports
     else return _require(module)
   }
   var outbuf = new Float32Array(4096 * 2 * 2)
 
-  var fn = function(){return outbuf}
+  fn = function(){return outbuf}
 
-  var tick = function (output, input) { // a fill-a-buffer function
+  tick = function (output, input) { // a fill-a-buffer function
 
     for (var ii = 0; ii < output.length; ii += 1) {
 
@@ -36,15 +34,11 @@ module.exports = function(){
       case 'data':
         this.postMessage(xxx.deconstruct(tick(outbuf, data.input)))
       break
-      case 'function':
-        fn = data.fn()
-      break;
       case 'config':
-      //  ctonsole.log(new Function('return ' + data.fn))
         rate = data.sampleRate || rate
-        var modules = detect(data.fn)
+        var _fn = new Function(['require'], data.fn)
+        var modules = detect(_fn.toString())
         if(modules.length){
-          var _fn = data.fn
           var body = {"options":{"standalone":true}, dependencies: {}}
           var cached = []
           var help = {}
@@ -69,11 +63,15 @@ module.exports = function(){
                 var mods = JSON.parse(this.responseText);
                 var names = Object.keys(mods)
                 names.forEach(function(name){
-                  moduleCache[help[name]] = mods[name]
+                  var x = moduleCache[help[name]] = mods[name]
+                  var m = {exports: {}}
+                  Function([help[name]], x.bundle)(m)
+                  moduleCache[help[name]].exports = m.exports
                 })
-                console.log(moduleCache.amod.bundle)
-                var f = dereq(_fn)
-                eval('fn = ' + f + '()')
+                fn = _fn(require)
+                console.log(fn)
+                
+                //eval('fn = ' + _fn + '()()')
               }
               else console.log(this.status)
             } 
@@ -82,7 +80,9 @@ module.exports = function(){
           
         }
         else{
-          eval('fn = ' + data.fn + '()')
+          fn = new Function(data.fn)()
+          console.log(data.fn)
+          eval('fn = function anon(){' + data.fn + '}()')
         }
         outbuf = new Float32Array(data.size) || outbuf
       break;
