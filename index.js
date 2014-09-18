@@ -39,7 +39,7 @@ module.exports = function (context, fn, bufSize) {
 
           self.i += 1;
 
-          output[i] = self.fn(self.t, self.i, input);
+          output[i] = self.fn(self.t, self.i, input[i]);
 
           if(self.i >= self.duration) {
             self.stop()
