@@ -11,6 +11,10 @@ module.exports = function (context, fn, bufSize) {
 
     self.fn = fn
 
+    const tt = new Float32Array(1)
+    const ii = new Float32Array(1)
+    const rate = context.sampleRate
+
     self.i = self.t = 0
 
     window._SAMPLERATE = self.sampleRate = self.rate = context.sampleRate;
@@ -25,26 +29,14 @@ module.exports = function (context, fn, bufSize) {
       self.tick(output, input);
     };
 
-    self._input = []
-    
     self.tick = function (output, input) { // a fill-a-buffer function
-
-      output = output || self._buffer;
-
-      input = input || self._input
 
       for (var i = 0; i < output.length; i += 1) {
 
-          self.t = self.i / self.rate;
+          tt[0] = ii[0] / rate
+          ii[0] = ii[0] + 1
 
-          self.i += 1;
-
-          output[i] = self.fn(self.t, self.i, input[i]);
-
-          if(self.i >= self.duration) {
-            self.stop()
-            break;
-          }
+          output[i] = self.fn(tt[0], ii[0], input[i]);
 
       }
 
