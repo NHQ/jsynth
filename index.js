@@ -11,8 +11,8 @@ module.exports = function (context, fn, bufSize) {
 
     self.fn = fn
 
-    const tt = new Float32Array(1)
-    const ii = new Float32Array(1)
+    var tt = 0.0
+    var ii = 0
     const rate = context.sampleRate
 
     self.i = self.t = 0
@@ -33,8 +33,8 @@ module.exports = function (context, fn, bufSize) {
 
       for (var i = 0; i < output.length; i += 1) {
 
-          tt[0] = ii[0] / rate
-          ii[0] = ii[0] + 1
+          tt = ii / rate
+          ii = ii + 1
 
           output[i] = self.fn(tt[0], ii[0], input[i]);
 
