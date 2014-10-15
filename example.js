@@ -1,7 +1,7 @@
 var master = new webkitAudioContext();
 
 var jsynth = require('./')
-var srcr = require('../iframarfi/src.js')
+//var srcr = require('../iframarfi/src.js')
 
 var code = "" + 
   "var tau = Math.PI * 2; " +
@@ -13,7 +13,7 @@ var code2 = "" +
   "return function(time){" +
   "  return Math.sin(time * tau * 440 * 2)}"
 
-var synth = jsynth(master, code);
+var synth = jsynth(master, code, 256 * 2);
 
 synth.connect(master.destination)
 
