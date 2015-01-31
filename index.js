@@ -35,8 +35,7 @@ module.exports = function (context, fn, bufSize) {
 
           tt = ii / rate
           ii = ii + 1
-
-          output[i] = self.fn(tt[0], ii[0], input[i]);
+          output[i] = self.fn(tt, ii, input[i]);
 
       }
 
